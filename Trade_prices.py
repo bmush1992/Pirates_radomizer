@@ -3,7 +3,7 @@ from contextlib import redirect_stdout
 import os
 
 
-# Формирование цены
+# Цена покупки 
 def sellPriceLow():
     resultSellPriceLow = random.randint(1, 8)*5
     return resultSellPriceLow
@@ -13,6 +13,7 @@ def sellPriceHigh():
     resultSellPriceHigh = random.randint(1, 8)*5 + random.randint(1, 8)*5
     return resultSellPriceHigh
 
+# Цена продажи
 def buyPriceLow(sellPrice):
     resultBuyPriceLow = max(5, sellPrice - random.randint(1, 4)*5)
     return resultBuyPriceLow
@@ -21,7 +22,7 @@ def buyPriceHigh(sellPrice):
     resultBuyPriceHigh = max(5, sellPrice - random.randint(1, 4)*5)
     return resultBuyPriceHigh
 
-# Складываем цены в товары
+# Складываем цены в строки товара
 def goodPairLow(good):
     sellPrice = sellPriceLow()
     resultStringLow = f'{good}: {sellPrice}/{buyPriceLow(sellPrice)}'
@@ -32,6 +33,7 @@ def goodPairHigh(good):
         resultStringHigh = f'{good}: {sellPrice}/{buyPriceHigh(sellPrice)}'
         return resultStringHigh
 
+# Исключения для оружия и рабов
 def slavesExceptionInd():
         resultStringSlavesInd = f'Рабы: {sellPriceHigh()}/'
         return resultStringSlavesInd
@@ -45,15 +47,14 @@ def weaponsException():
         return resultStringWeaponsInd
 
 
-
-# Распределяем товары по категориям
+# Берем правильный рандом в зависимости от группы товара
 def goodType(good):
     if good == 'Припасы' or good == 'Стройматериалы' or good == 'Вино':
         return goodPairLow(good)
     else:
         return goodPairHigh(good)
     
-# Складываем с городом
+# Собираем столбик из цен каждого товара (с исключениями для рабов и поселений индейцев)
 def townTable(town):
     arrayGoods = ['Припасы', 'Стройматериалы', 'Вино', 'Украшения', 'Оружие', 'Рабы']
     # townTableResult = 
@@ -68,7 +69,7 @@ def townTable(town):
             else:
                 print(goodType(arrayGoods[good]))
             
-       # Финалка
+# Повторяем для каждого города
 def finalTable():
     arrayTown = ['Темпора', 'Тирр', 'Байтон', 'Ислан', 'Калпус', 'Айвел', 'Пирайт', 'Хомбор', 'Альпокки', 'Мауро', 'Туачча']
     for town in range(0,len(arrayTown)):
@@ -79,9 +80,4 @@ directory_path = os.path.dirname(os.path.realpath(__file__))
 with open(f'{directory_path}/out.txt', 'w') as f:
     with redirect_stdout(f):
         finalTable()
-
-
-
-
-
-
+        
